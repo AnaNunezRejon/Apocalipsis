@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/amarilloGobierno"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- 🔝 Espacio superior -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="116dp" />
+
+    <!-- 🇪🇸 Logo superior oficial -->
+    <ImageView
+        android:id="@+id/logoGobierno"
+        android:src="@drawable/gobierno_de_espania"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:contentDescription="Logo del Gobierno de España"
+        android:layout_marginBottom="80dp" />
+
+    <!-- 🧍 Campo de nombre -->
+    <EditText
+        android:id="@+id/campoNombre"
+        android:hint="Nombre"
+        android:inputType="textCapWords"
+        android:background="@drawable/caja_login"
+        android:padding="12dp"
+        android:textColor="@color/textoOscuro"
+        android:textColorHint="@color/textoOscuro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp" />
+
+    <!-- 🔒 Campo de contraseña -->
+    <EditText
+        android:id="@+id/campoContrasena"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:background="@drawable/caja_login"
+        android:padding="12dp"
+        android:textColor="@color/textoOscuro"
+        android:textColorHint="@color/textoOscuro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 🔵 Botón acceder -->
+    <Button
+        android:id="@+id/botonAcceder"
+        android:text="ACCEDER"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/blanco"
+        android:background="@color/azulGobierno"
+        android:padding="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp" />
+
+    <!-- 🇪🇺 Logotipo inferior de la Unión Europea -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imagenUE"
+            android:src="@drawable/logo_ue"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="Logo Unión Europea"
+            android:layout_marginEnd="8dp" />
+    </LinearLayout>
+
+</LinearLayout>

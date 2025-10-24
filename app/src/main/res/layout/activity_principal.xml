@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/azulGobierno"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 🟨 CABECERA -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/amarilloGobierno"
+        android:gravity="center_vertical"
+        android:paddingTop="40dp"
+        android:paddingBottom="30dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="6dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textoSaludo"
+                android:text="Hola ANA"
+                android:textColor="@color/azulGobierno"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:id="@+id/textoFecha"
+                android:text="Hoy es viernes, 24 de octubre de 2025"
+                android:textColor="@color/textoOscuro"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/escudo"
+            android:src="@drawable/escudo_espania"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="Escudo de España" />
+    </LinearLayout>
+
+    <!-- 🔵 CONTENIDO PRINCIPAL -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <!-- 📁 Mis documentos -->
+            <TextView
+                android:text="Mis documentos"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="28dp">
+
+                <!-- Tarjeta 1 -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@drawable/tarjeta_blanca"
+                    android:padding="14dp"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp">
+
+                    <TextView
+                        android:text="Datos de identidad\ny documentación"
+                        android:textColor="@color/azulGobierno"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!-- Tarjeta 2 -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@drawable/tarjeta_azul"
+                    android:padding="14dp"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp">
+
+                    <TextView
+                        android:text="Títulos no\nuniversitarios"
+                        android:textColor="@color/blanco"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!-- Tarjeta 3 -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@drawable/tarjeta_azul"
+                    android:padding="14dp"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Títulos\nuniversitarios"
+                        android:textColor="@color/blanco"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 💬 Centro de mensajes -->
+            <TextView
+                android:text="Centro de mensajes"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:id="@+id/contenedorAlertas"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp" />
+        </LinearLayout>
+    </ScrollView>
+    <!-- ⚫ MENÚ INFERIOR CON ICONOS -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/azulGobierno"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Botón Inicio -->
+        <LinearLayout
+            android:id="@+id/botonInicio"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_inicio"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <TextView
+                android:text="Inicio"
+                android:textColor="@color/blanco"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Botón Servicios -->
+        <LinearLayout
+            android:id="@+id/botonServicios"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_servicios"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+ />
+
+            <TextView
+                android:text="Servicios"
+                android:textColor="@color/blanco"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Botón Historial -->
+        <LinearLayout
+            android:id="@+id/botonHistorial"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_historial"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+ />
+
+            <TextView
+                android:text="Historial"
+                android:textColor="@color/blanco"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Botón Guía -->
+        <LinearLayout
+            android:id="@+id/botonGuia"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_guia"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+ />
+
+            <TextView
+                android:text="Guía"
+                android:textColor="@color/blanco"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
