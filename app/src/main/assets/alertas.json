@@ -1,0 +1,110 @@
+[
+  {
+    "dia": 1,
+    "hora": "10:30",
+    "mensaje": "⚠️ Se están registrando pequeños cortes de luz y fallos en electrodomésticos de varias zonas. Las autoridades lo atribuyen a una sobrecarga en la red eléctrica.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 2,
+    "hora": "12:15",
+    "mensaje": "⚠️ Numerosos ciudadanos informan de luces que parpadean, televisores que se encienden solos y aparatos que emiten ruidos extraños. Se descartan ataques informáticos por el momento.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 3,
+    "hora": "13:45",
+    "mensaje": "🚨 Varias subestaciones eléctricas han fallado simultáneamente. El motivo aún se desconoce. Se aconseja a la población reducir el consumo eléctrico.",
+    "sonido": "alarm_short"
+  },
+  {
+    "dia": 4,
+    "hora": "16:10",
+    "mensaje": "⚠️ Se extienden teorías sobre saboteadores o fallos en la infraestructura. Los técnicos aseguran que los daños parecen provocados 'desde dentro' de los equipos.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 5,
+    "hora": "11:05",
+    "mensaje": "⚠️ Se reportan animales domésticos alterados y comportamientos extraños cerca de electrodomésticos. Algunas cámaras de seguridad han captado movimientos rápidos y diminutos.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 6,
+    "hora": "17:20",
+    "mensaje": "🔥 Pequeños incendios domésticos vinculados a aparatos dañados están siendo reportados. Se recomienda extremar la precaución.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 7,
+    "hora": "19:40",
+    "mensaje": "🚨 Equipos de reparación enviados a investigar subestaciones no regresaron. Las comunicaciones con ellos se interrumpieron súbitamente.",
+    "sonido": "alarm_short"
+  },
+  {
+    "dia": 8,
+    "hora": "10:50",
+    "mensaje": "⚠️ Se han detectado pequeñas criaturas desconocidas en la zona norte de la ciudad. Parecen evitar la luz directa y actúan en grupo. Se recomienda mantener la calma.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 9,
+    "hora": "14:10",
+    "mensaje": "🚨 Los informes de ataques aumentan. Se confirma que las criaturas responden agresivamente al ruido y al agua. Evita cualquier contacto.",
+    "sonido": "alarm_short"
+  },
+  {
+    "dia": 10,
+    "hora": "18:30",
+    "mensaje": "⚠️ Se han reportado sabotajes a las redes eléctricas. Algunas zonas permanecen sin suministro. Los Gremlins parecen sentirse cómodos en la oscuridad.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 11,
+    "hora": "12:20",
+    "mensaje": "⚠️ Se ha confirmado que los Gremlins pueden infiltrarse por conductos de ventilación y tuberías. Se han reportado ruidos extraños en hogares cerrados.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 12,
+    "hora": "16:40",
+    "mensaje": "🚨 Los informes de infestaciones aumentan rápidamente. Se sospecha que el contacto con el agua multiplica a los Gremlins. ¡Evita mojar a cualquier criatura!",
+    "sonido": "alarm_short"
+  },
+  {
+    "dia": 13,
+    "hora": "19:10",
+    "mensaje": "⚠️ Algunos grupos de Gremlins parecen organizar ataques. Se han visto actuando de forma sincronizada para cortar rutas de escape.",
+    "sonido": "alert"
+  },
+  {
+    "dia": 13,
+    "hora": "23:10",
+    "mensaje": "⚠️ (Mensaje indescifrable)",
+    "sonido": "gremlin_risa"
+  },
+  {
+    "dia": 14,
+    "hora": "21:00",
+    "mensaje": "🚨 El gobierno local ha impuesto un toque de queda desde las 20:00 hasta las 6:00. Los Gremlins dominan las calles durante la noche.",
+    "sonido": "alarm_short"
+  },
+  {
+    "dia": 14,
+    "hora": "01:10",
+    "mensaje": "⚠️ (Mensaje indescifrable)",
+    "sonido": "alien_risa"
+  },
+  {
+    "dia": 15,
+    "hora": "09:10",
+    "mensaje": "⚠️ (Mensaje indescifrable)",
+    "sonido": "sonido_raro"
+  },
+  {
+    "dia": 15,
+    "hora": "20:00",
+    "mensaje": "🚨 Han entrado en la base. No queda comunicación estable con el exterior. Las criaturas están dentro… ¡Repito, están dentro! 🔥 ¡Sálvese quien pueda!",
+    "sonido": "siren_warning"
+  }
+]

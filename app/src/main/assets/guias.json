@@ -1,0 +1,92 @@
+[
+  {
+    "dia": 1,
+    "hora": "",
+    "mensaje": "🔌 Revisa tus aparatos eléctricos. Desenchufa los que no uses y evita dejar cargadores conectados toda la noche.",
+    "sonido": "false"
+  },
+  {
+    "dia": 2,
+    "hora": "",
+    "mensaje": "⚙️ Si tus dispositivos se comportan de forma inusual, apágalos por completo. No intentes repararlos tú mismo. Espera comunicados oficiales.",
+    "sonido": "false"
+  },
+  {
+    "dia": 3,
+    "hora": "",
+    "mensaje": "💡 Mantén solo los dispositivos esenciales enchufados. No cargues móviles ni ordenadores a menos que sea necesario. Ten linternas y pilas preparadas.",
+    "sonido": "false"
+  },
+  {
+    "dia": 4,
+    "hora": "",
+    "mensaje": "🧰 Revisa las rejillas de ventilación y zonas donde guardas aparatos. Mantén los dispositivos alejados de la humedad. Evita usar lavadoras o microondas por ahora.",
+    "sonido": "false"
+  },
+  {
+    "dia": 5,
+    "hora": "",
+    "mensaje": "👀 Si tu mascota reacciona ante un rincón o aparato, presta atención. Evita dejar comida o líquidos cerca de dispositivos eléctricos.",
+    "sonido": "false"
+  },
+  {
+    "dia": 6,
+    "hora": "",
+    "mensaje": "🚒 Ten un extintor o cubo de arena a mano. Si notas chispazos o ruidos, corta la luz desde el cuadro eléctrico. No uses agua para apagar fuego eléctrico.",
+    "sonido": "false"
+  },
+  {
+    "dia": 7,
+    "hora": "",
+    "mensaje": "📻 Mantén la radio encendida en modo batería. Los comunicados oficiales se emitirán por esta vía en caso de emergencia.",
+    "sonido": "false"
+  },
+  {
+    "dia": 8,
+    "hora": "",
+    "mensaje": "🔦 Mantén la iluminación encendida en casa durante la noche. Las criaturas parecen incomodarse ante la luz. Evita salir después del anochecer.",
+    "sonido": "false"
+  },
+  {
+    "dia": 9,
+    "hora": "",
+    "mensaje": "🤫 Reduce el ruido al mínimo. Apaga televisores, radios o motores cuando no los necesites. Si ves una criatura, retrocede lentamente sin gritar.",
+    "sonido": "false"
+  },
+  {
+    "dia": 10,
+    "hora": "",
+    "mensaje": "🕯 Prepara velas, linternas o generadores portátiles. Evita usar fuentes de agua cerca de generadores o enchufes improvisados.",
+    "sonido": "false"
+  },
+  {
+    "dia": 11,
+    "hora": "",
+    "mensaje": "🧰 Sella las entradas pequeñas: rejillas, desagües y ventilaciones. Usa cinta adhesiva, trapos o lo que tengas a mano.",
+    "sonido": "false"
+  },
+  {
+    "dia": 12,
+    "hora": "",
+    "mensaje": "💧 No uses agua innecesariamente. Cubre grifos, cubos y fuentes. Si necesitas limpiar, usa paños húmedos o productos sin base acuosa.",
+    "sonido": "false"
+  },
+  {
+    "dia": 13,
+    "hora": "",
+    "mensaje": "🪟 Refuerza puertas y ventanas. Si vives en pisos bajos, bloquea accesos externos con muebles o tablones. Mantén un plan de escape preparado.",
+    "sonido": "false"
+  },
+  {
+    "dia": 14,
+    "hora": "",
+    "mensaje": "⛔ No salgas durante el toque de queda. Aprovecha el día para recopilar suministros y descansar. Mantén una linterna siempre a mano.",
+    "sonido": "false"
+  },
+  {
+    "dia": 15,
+    "hora": "",
+    "mensaje": "🪖 Busca ayuda militar o grupos organizados cercanos. Evita moverte solo y mantente alejado de zonas urbanas. Si encuentras un refugio seguro, no salgas hasta nuevo aviso.",
+    "sonido": "false"
+  }
+]

@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.apocalipsisgranada">
 
+    <!-- ============================ -->
+    <!-- 🔐 PERMISOS GENERALES -->
+    <!-- ============================ -->
+
+    <!-- Permitir vibración -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Permitir reproducir sonidos de notificación -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- Permitir mostrar notificaciones (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <!-- Acceso a Internet (para abrir webs desde servicios) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Permitir llamadas desde los botones de servicios -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- Permiso opcional: usar el flash como linterna -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <!-- Permitir mantener la pantalla encendida (por si lo usas en alertas largas) -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- ============================ -->
+    <!-- 🏛️ APLICACIÓN -->
+    <!-- ============================ -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ApocalipsisGranada">
+        android:theme="@style/Theme.ApocalipsisGranada"
+        tools:targetApi="33">
 
-        <!-- 🟢 Pantalla principal (Inicio automático al abrir la app) -->
+        <!-- 🟢 Pantalla principal -->
         <activity
-            android:name=".vista.PrincipalActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".vista.VistaPrincipal"
+            android:exported="false">
+
         </activity>
 
         <!-- 🟨 Pantallas secundarias -->
@@ -31,10 +65,18 @@
             android:name=".vista.VistaServicios"
             android:exported="false" />
 
-        <!-- 🔐 Pantalla de login (ya no es la principal) -->
+        <!-- (Opcional) Pantalla de login -->
         <activity
             android:name=".vista.LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
 
     </application>
+
 </manifest>

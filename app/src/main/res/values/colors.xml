@@ -7,10 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-        <color name="amarilloGobierno">#FDD835</color>
-        <color name="azulClaroGobierno">#5166A9</color>
-        <color name="azulGobierno">#001B70</color>
-        <color name="rojoBandera">#D32F2F</color>
-        <color name="blanco">#FFFFFF</color>
-        <color name="textoOscuro">#111111</color>
+    <color name="amarilloGobierno">#FDD835</color>
+    <color name="azulClaroGobierno">#5166A9</color>
+    <color name="azulGobierno">#001B70</color>
+    <color name="rojoBandera">#D32F2F</color>
+    <color name="textoAzul">#8B9EDE</color>
+    <color name="textoOscuro">#111111</color>
+    <color name="textoGris">#757575</color>
+
+    <color name="verdeDev">#3CB371</color>
+    <color name="rosaDev">#D9217F</color>
 </resources>

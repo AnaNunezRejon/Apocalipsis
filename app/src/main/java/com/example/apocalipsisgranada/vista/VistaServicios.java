@@ -2,20 +2,50 @@ package com.example.apocalipsisgranada.vista;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
+
 import com.example.apocalipsisgranada.R;
 
-public class VistaServicios extends AppCompatActivity {
+public class VistaServicios extends BaseActivity {
+
+    private TextView textoModo;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servicios);
 
+
+        prefs = getSharedPreferences("configuracion", MODE_PRIVATE);
+
+
+        // 🔶 Texto de modo desarrollador (solo informativo)
+        textoModo = findViewById(R.id.textoModoHistorial);
+        if (textoModo != null) {
+            boolean modoDev = prefs.getBoolean("modoDesarrollador", false);
+            int diaActual = obtenerDiaActualSimulado();
+            if (modoDev) {
+                textoModo.setVisibility(TextView.VISIBLE);
+                textoModo.setText("🧪 Modo desarrollador — Día " + diaActual);
+            } else {
+                textoModo.setVisibility(TextView.GONE);
+            }
+        }
+
+        // 🟡 Cabecera y menú inferior unificados
+        configurarModoDesarrolladorComun();
+        configurarMenuInferior();
+
+        mostrarSaludoUsuario();
+        actualizarColoresModoDesarrollador();
+
+        // 🏛 Configurar los bloques de servicios
         configurarServicio(R.id.itemPoliciaMunicipal, "Policía Municipal", "958111111", "https://granada.es/policia");
         configurarServicio(R.id.itemGuardiaCivil, "Guardia Civil", "958222222", "https://www.guardiacivil.es/");
         configurarServicio(R.id.itemPoliciaNacional, "Policía Nacional", "958333333", "https://www.policia.es/");
@@ -23,30 +53,40 @@ public class VistaServicios extends AppCompatActivity {
         configurarServicio(R.id.itemRegistro, "Registro Electrónico General", null, "https://sede.administracion.gob.es/");
     }
 
+    // ============================================================
+    // 🏛 CONFIGURAR CADA SERVICIO
+    // ============================================================
     private void configurarServicio(int idVista, String nombre, String telefono, String url) {
         LinearLayout servicio = findViewById(idVista);
+        if (servicio == null) {
+            Toast.makeText(this, "Error: vista no encontrada para " + nombre, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        TextView texto = servicio.findViewById(R.id.textoServicio);
-        texto.setText(nombre + (telefono != null ? " - " + telefono : ""));
-        servicio.setOnClickListener(v -> mostrarOpciones(nombre, telefono, url));
+        TextView textoServicio = servicio.findViewById(R.id.textoServicio);
+        textoServicio.setText(nombre + (telefono != null ? " - " + telefono : ""));
+        servicio.setOnClickListener(v -> mostrarOpcionesServicio(nombre, telefono, url));
     }
 
-    private void mostrarOpciones(String titulo, String telefono, String url) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(titulo);
+    // ============================================================
+    // 📞 MOSTRAR OPCIONES DE CONTACTO
+    // ============================================================
+    private void mostrarOpcionesServicio(String titulo, String telefono, String url) {
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+        dialogo.setTitle(titulo);
 
         if (telefono != null) {
-            builder.setItems(new CharSequence[]{
+            dialogo.setItems(new CharSequence[]{
                             "📞 Llamar a " + titulo,
                             "🌐 Abrir web oficial",
                             "❌ Cancelar"},
-                    (dialog, which) -> {
-                        switch (which) {
+                    (dialog, opcion) -> {
+                        switch (opcion) {
                             case 0:
-                                llamar(telefono);
+                                realizarLlamada(telefono);
                                 break;
                             case 1:
-                                abrirWeb(url);
+                                abrirPaginaWeb(url);
                                 break;
                             default:
                                 dialog.dismiss();
@@ -54,25 +94,39 @@ public class VistaServicios extends AppCompatActivity {
                         }
                     });
         } else {
-            builder.setItems(new CharSequence[]{
+            dialogo.setItems(new CharSequence[]{
                             "🌐 Abrir web oficial",
                             "❌ Cancelar"},
-                    (dialog, which) -> {
-                        if (which == 0) abrirWeb(url);
+                    (dialog, opcion) -> {
+                        if (opcion == 0) abrirPaginaWeb(url);
                         else dialog.dismiss();
                     });
         }
 
-        builder.show();
+        dialogo.show();
     }
 
-    private void llamar(String numero) {
+    // ============================================================
+    // ☎️ LLAMAR A UN NÚMERO
+    // ============================================================
+    private void realizarLlamada(String numero) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + numero));
         startActivity(intent);
     }
 
-    private void abrirWeb(String url) {
+    // ============================================================
+    // 🌐 ABRIR UNA PÁGINA WEB
+    // ============================================================
+    private void abrirPaginaWeb(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
+    }
+
+    // ============================================================
+    // 🔁 ACTUALIZAR SERVICIOS (para el modo desarrollador)
+    // ============================================================
+    public void actualizarServicios() {
+        // Si algún día quieres que cambien los servicios según el día o evento,
+        // puedes hacerlo aquí. Por ahora no necesita refresco.
     }
 }

@@ -1,176 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/azulGobierno"
-    tools:context=".vista.PrincipalActivity">
+    tools:context=".vista.VistaPrincipal">
 
-    <!-- 🟨 CABECERA FIJA -->
-    <LinearLayout
-        android:id="@+id/cabecera"
-        android:orientation="horizontal"
-        android:background="@color/amarilloGobierno"
-        android:paddingTop="50dp"
-        android:paddingBottom="25dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:gravity="center_vertical"
+
+    <!-- 🟨 CABECERA REUTILIZADA -->
+    <include layout="@layout/cabecera" />
+
+    <!-- 🧪 INDICADOR DE MODO DESARROLLADOR -->
+    <TextView
+        android:id="@+id/textoModoHistorial"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/amarilloGobierno"
+        android:text="🧪 Modo desarrollador — Día 1"
+        android:textColor="@color/azulGobierno"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="8dp"
+        android:visibility="gone" />
 
-        <!-- Texto del saludo -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textoSaludo"
-                android:text="Hola, ANTONIA PÉREZ"
-                android:textColor="@color/azulGobierno"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/textoFecha"
-                android:text="Hoy es jueves 23 de octubre de 2025"
-                android:textColor="@color/azulGobierno"
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Escudo -->
-        <ImageView
-            android:id="@+id/escudoGobierno"
-            android:src="@drawable/escudo_espania"
-            android:contentDescription="Escudo de España"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:adjustViewBounds="true" />
-    </LinearLayout>
-
-    <!-- 🟦 CONTENIDO PRINCIPAL -->
-    <ScrollView
+    <!-- 🟦 LISTA DE GUÍAS -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerGuia"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp"
-        android:background="@color/azulGobierno">
-
-        <LinearLayout
-            android:id="@+id/contenedorContenido"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!-- Aquí va el contenido de cada vista -->
-            <TextView
-                android:text="(Contenido principal de esta vista)"
-                android:textColor="@color/blanco"
-                android:textSize="16sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="16dp" />
-        </LinearLayout>
-    </ScrollView>
+        android:padding="12dp"
+        android:scrollbars="vertical"
+        android:layout_marginBottom="1dp"
+        android:clipToPadding="false"
+        android:paddingBottom="72dp" />
 
     <!-- ⚫ MENÚ INFERIOR -->
-    <LinearLayout
+    <include
         android:id="@+id/menuInferior"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@color/azulGobierno"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/botonInicio"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@drawable/ic_inicio"
-                android:tint="@color/blanco"
-                android:layout_width="28dp"
-                android:layout_height="28dp" />
-            <TextView
-                android:text="Inicio"
-                android:textColor="@color/blanco"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/botonServicios"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@drawable/ic_servicios"
-                android:tint="@color/blanco"
-                android:layout_width="28dp"
-                android:layout_height="28dp" />
-            <TextView
-                android:text="Servicios"
-                android:textColor="@color/blanco"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/botonHistorial"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@drawable/ic_historial"
-                android:tint="@color/blanco"
-                android:layout_width="28dp"
-                android:layout_height="28dp" />
-            <TextView
-                android:text="Historial"
-                android:textColor="@color/blanco"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/botonGuia"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@drawable/ic_guia"
-                android:tint="@color/blanco"
-                android:layout_width="28dp"
-                android:layout_height="28dp" />
-            <TextView
-                android:text="Guía"
-                android:textColor="@color/blanco"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>
+        layout="@layout/menu_inferior" />
 
 </LinearLayout>
