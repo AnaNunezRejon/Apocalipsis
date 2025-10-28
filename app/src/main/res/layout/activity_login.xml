@@ -52,11 +52,11 @@
     <!-- 🔵 Botón acceder -->
     <Button
         android:id="@+id/botonAcceder"
-        android:text="ACCEDER"
+        android:text="INICIAR SESIÓN"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textColor="@color/white"
-        android:background="@color/azulGobierno"
+        android:backgroundTint="@color/azulGobierno"
         android:padding="14dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

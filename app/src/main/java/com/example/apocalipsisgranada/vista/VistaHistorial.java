@@ -31,27 +31,15 @@ public class VistaHistorial extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial);
 
-        // 🟡 Cabecera y menú inferior unificados
+        // 🟡 Cargar metodos comunes
         configurarModoDesarrolladorComun();
         configurarMenuInferior();
         actualizarCabecera();
         mostrarSaludoUsuario();
         actualizarColoresModoDesarrollador();
+        mostrarTextoModoDesarrollador();
 
         prefs = getSharedPreferences("configuracion", MODE_PRIVATE);
-
-        // 🔶 Texto de modo desarrollador (solo informativo)
-        textoModo = findViewById(R.id.textoModoHistorial);
-        if (textoModo != null) {
-            boolean modoDev = prefs.getBoolean("modoDesarrollador", false);
-            int diaActual = obtenerDiaActualSimulado();
-            if (modoDev) {
-                textoModo.setVisibility(TextView.VISIBLE);
-                textoModo.setText("🧪 Modo desarrollador — Día " + diaActual);
-            } else {
-                textoModo.setVisibility(TextView.GONE);
-            }
-        }
 
         // 🕰 Recycler de alertas
         recyclerView = findViewById(R.id.recyclerHistorial);

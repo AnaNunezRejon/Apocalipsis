@@ -28,14 +28,17 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected SharedPreferences preferencias;
     private static final int TOQUES_DESARROLLADOR = 5;
+    protected SharedPreferences preferencias;
     private int contadorToques = 0;
+
+    // ============================================================
+    // 🔁 REINICIAR SIMULACIÓN SIN BORRAR USUARIO NI MODO DEV
+    // ============================================================
+    private boolean enReinicio = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +74,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                 preferencias.edit().putBoolean("modoDesarrollador", nuevoModo).apply();
 
                 if (nuevoModo) {
-                    contenedorDev.setVisibility(View.VISIBLE);
-                    escudo.setImageResource(R.drawable.escudo_espania_negro);
                     Toast.makeText(this, "🔧 Modo desarrollador ACTIVADO", Toast.LENGTH_SHORT).show();
                 } else {
-                    contenedorDev.setVisibility(View.GONE);
-                    escudo.setImageResource(R.drawable.escudo_espania);
                     Toast.makeText(this, "Modo desarrollador DESACTIVADO", Toast.LENGTH_SHORT).show();
                 }
+
+                // 🔄 Reiniciar la actividad actual para aplicar el nuevo modo
+                Intent intent = getIntent();
+                finish();
+                overridePendingTransition(0, 0); // sin animación
+                startActivity(intent);
+                overridePendingTransition(0, 0);
 
                 actualizarColoresModoDesarrollador();
                 contadorToques = 0;
@@ -216,6 +222,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         gestor.notify(mensaje.getDia(), builder.build());
     }
 
+
     protected void reproducirSonido(Mensaje mensaje) {
         int sonidoId = mensaje.obtenerRecursoSonido();
         if (sonidoId != 0) {
@@ -232,8 +239,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     // ============================================================
-// 🔔 MOSTRAR ALERTAS Y SONIDOS DEL NUEVO DÍA
-// ============================================================
+    // 🔔 MOSTRAR ALERTAS Y SONIDOS DEL NUEVO DÍA
+    // ============================================================
     protected void procesarAlertasDelDia(int diaActual) {
         try {
             InputStream is = getAssets().open("alertas.json");
@@ -257,12 +264,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                             "alerta"
                     );
 
-                    // Solo notificar si no se ha hecho ya
-                    if (!yaNotificada(diaActual * 10 + i)) {
-                        reproducirSonido(mensaje);
-                        mostrarNotificacion(mensaje);
-                        marcarComoNotificada(diaActual * 10 + i);
-                    }
+                    // 🔔 Mostrar siempre notificación y sonido aunque ya se haya notificado antes
+                    reproducirSonido(mensaje);
+                    mostrarNotificacion(mensaje);
                 }
             }
 
@@ -270,6 +274,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     protected void marcarComoNotificada(int dia) {
         preferencias.edit().putBoolean("notificado_dia_" + dia, true).apply();
@@ -299,12 +304,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         actualizarCabecera();
         actualizarTextoModoDesarrollador();
+        mostrarTextoModoDesarrollador();
     }
-
-    // ============================================================
-// 🔁 REINICIAR SIMULACIÓN SIN BORRAR USUARIO NI MODO DEV
-// ============================================================
-    private boolean enReinicio = false;
 
     protected void reiniciarSimulacionComun() {
         if (enReinicio) return; // evita doble clic accidental
@@ -341,9 +342,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             textoFecha.setText("Hoy es " + obtenerFechaSimulada(diaActual));
         }
     }
+
     // ============================================================
-// 🧩 ACTUALIZAR TEXTO Y COLORES DEL MODO DESARROLLADOR
-// ============================================================
+    // 🧩 ACTUALIZAR TEXTO Y COLORES DEL MODO DESARROLLADOR
+    // ============================================================
     protected void actualizarTextoModoDesarrollador() {
         boolean modoDev = preferencias.getBoolean("modoDesarrollador", false);
 
@@ -356,9 +358,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             contenedorDev.setVisibility(modoDev ? View.VISIBLE : View.GONE);
         }
     }
+
     // ============================================================
-// 👋 MOSTRAR SALUDO PERSONALIZADO + CERRAR SESIÓN
-// ============================================================
+    // 👋 MOSTRAR SALUDO PERSONALIZADO + CERRAR SESIÓN
+    // ============================================================
     protected void mostrarSaludoUsuario() {
         TextView textoSaludo = findViewById(R.id.textoSaludo);
         TextView textoCerrarSesion = findViewById(R.id.textoCerrarSesion);
@@ -399,12 +402,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             });
         }
 
-        }
+    }
+
     // ============================================================
-// 🎨 APLICAR COLORES SEGÚN MODO DESARROLLADOR
-// ============================================================
+    // 🎨 APLICAR COLORES SEGÚN MODO DESARROLLADOR
+    // ============================================================
     protected void actualizarColoresModoDesarrollador() {
         boolean modoDev = preferencias.getBoolean("modoDesarrollador", false);
+
+        if (this instanceof LoginActivity) return;
 
         View cabecera = findViewById(R.id.cabecera);
         View fondoMensajes = findViewById(R.id.fondoMensajes);
@@ -415,21 +421,52 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (modoDev) {
             // 💚 Verde para cabecera y menú
             if (cabecera != null) cabecera.setBackgroundColor(getColor(R.color.verdeDev));
-            if (menuInferior != null) menuInferior.setBackgroundColor(getColor(R.color.verdeDev));
+            //if (menuInferior != null) menuInferior.setBackgroundColor(getColor(R.color.verdeDev));
 
             // 💗 Rosa para fondo de mensajes y botones
-            if (fondoMensajes != null) fondoMensajes.setBackgroundColor(getColor(R.color.rosaDev));
-            if (botonAvanzar != null) botonAvanzar.setBackgroundTintList(getColorStateList(R.color.rosaDev));
-            if (botonReiniciar != null) botonReiniciar.setBackgroundTintList(getColorStateList(R.color.rosaDev));
+            //if (fondoMensajes != null) fondoMensajes.setBackgroundColor(getColor(R.color.rosaDev));
+            if (botonAvanzar != null)
+                botonAvanzar.setBackgroundTintList(getColorStateList(R.color.rosaDev));
+            if (botonReiniciar != null)
+                botonReiniciar.setBackgroundTintList(getColorStateList(R.color.rosaDev));
         } else {
             // 🔙 Volver a los colores normales del tema
             if (cabecera != null) cabecera.setBackgroundColor(getColor(R.color.amarilloGobierno));
-            if (menuInferior != null) menuInferior.setBackgroundColor(getColor(R.color.azulGobierno));
-            if (fondoMensajes != null) fondoMensajes.setBackgroundColor(getColor(R.color.azulGobierno));
-            if (botonAvanzar != null) botonAvanzar.setBackgroundTintList(getColorStateList(R.color.rojoBandera));
-            if (botonReiniciar != null) botonReiniciar.setBackgroundTintList(getColorStateList(R.color.rojoBandera));
+            if (menuInferior != null)
+                menuInferior.setBackgroundColor(getColor(R.color.azulGobierno));
+            if (fondoMensajes != null)
+                fondoMensajes.setBackgroundColor(getColor(R.color.azulGobierno));
+            if (botonAvanzar != null)
+                botonAvanzar.setBackgroundTintList(getColorStateList(R.color.rojoBandera));
+            if (botonReiniciar != null)
+                botonReiniciar.setBackgroundTintList(getColorStateList(R.color.rojoBandera));
         }
     }
+
+    // ============================================================
+    // 🧪 MOSTRAR Y ACTUALIZAR TEXTO DE MODO DESARROLLADOR
+    // ============================================================
+    protected void mostrarTextoModoDesarrollador() {
+        int[] posiblesIds = {
+                R.id.textoModo,
+        };
+
+        boolean modoDev = preferencias.getBoolean("modoDesarrollador", false);
+        int diaActual = preferencias.getInt("diaActual", 1);
+
+        for (int id : posiblesIds) {
+            TextView texto = findViewById(id);
+            if (texto != null) {
+                if (modoDev) {
+                    texto.setVisibility(View.VISIBLE);
+                    texto.setText("🧪 Modo desarrollador — Día " + diaActual);
+                } else {
+                    texto.setVisibility(View.GONE);
+                }
+            }
         }
+    }
+
+}
 
 

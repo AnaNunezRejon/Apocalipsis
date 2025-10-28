@@ -37,22 +37,9 @@ public class VistaGuia extends BaseActivity {
         actualizarCabecera();
         mostrarSaludoUsuario();
         actualizarColoresModoDesarrollador();
+        mostrarTextoModoDesarrollador();
 
         prefs = getSharedPreferences("configuracion", MODE_PRIVATE);
-
-
-        // 🔶 Texto de modo desarrollador (solo informativo)
-        textoModo = findViewById(R.id.textoModoHistorial);
-        if (textoModo != null) {
-            boolean modoDev = prefs.getBoolean("modoDesarrollador", false);
-            int diaActual = obtenerDiaActualSimulado();
-            if (modoDev) {
-                textoModo.setVisibility(TextView.VISIBLE);
-                textoModo.setText("🧪 Modo desarrollador — Día " + diaActual);
-            } else {
-                textoModo.setVisibility(TextView.GONE);
-            }
-        }
 
         // 🔹 Recycler con las guías
         recyclerView = findViewById(R.id.recyclerGuia);
@@ -113,7 +100,7 @@ public class VistaGuia extends BaseActivity {
 
                     Mensaje mensaje = new Mensaje(
                             dia,
-                            fecha, // 👈 guardamos la fecha calculada
+                            fecha,
                             obj.getString("mensaje"),
                             obj.optString("sonido", "false"),
                             "guia"
@@ -139,7 +126,7 @@ public class VistaGuia extends BaseActivity {
     }
 
     public void actualizarGuias() {
-        cargarGuias(); // ya lo tienes hecho
+        cargarGuias();
     }
 
 

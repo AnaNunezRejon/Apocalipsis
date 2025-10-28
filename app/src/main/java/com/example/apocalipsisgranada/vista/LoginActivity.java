@@ -13,7 +13,7 @@ import com.example.apocalipsisgranada.controlador.ControladorLogin;
 import com.example.apocalipsisgranada.controlador.Preferencias;
 import com.example.apocalipsisgranada.modelo.Usuario;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private EditText campoNombre;
     private EditText campoContrasena;

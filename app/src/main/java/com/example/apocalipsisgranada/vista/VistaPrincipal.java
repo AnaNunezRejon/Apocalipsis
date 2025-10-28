@@ -35,26 +35,15 @@ public class VistaPrincipal extends BaseActivity {
     private final List<Mensaje> guias = new ArrayList<>();
     private final List<Mensaje> mostrados = new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
+        // =============================
+        // 🧩 Inicialización general
+        // =============================
         preferencias = getSharedPreferences("configuracion", MODE_PRIVATE);
-
-        boolean primeraVez = preferencias.getBoolean("primer_arranque", true);
-        if (primeraVez) {
-            SharedPreferences.Editor editor = preferencias.edit();
-
-            // ⚠️ NO hacemos clear() para no perder nombreUsuario
-            editor.putBoolean("primer_arranque", false);
-            editor.putLong("fechaInicio", System.currentTimeMillis());
-            editor.putInt("diaActual", 1);
-            editor.putInt("indiceMensajeDia", 0);
-            editor.apply();
-        }
-
         recyclerMensajes = findViewById(R.id.recyclerPrincipal);
         recyclerMensajes.setLayoutManager(new LinearLayoutManager(this));
 
@@ -63,18 +52,48 @@ public class VistaPrincipal extends BaseActivity {
         botonReiniciar = findViewById(R.id.botonReiniciar);
         textoFecha = findViewById(R.id.textoFecha);
 
+        // =============================
+        // ⚙️ Configuración inicial
+        // =============================
+        configurarPrimerArranque();
         configurarModoDesarrolladorComun();
         configurarMenuInferior();
         mostrarSaludoUsuario();
+        mostrarTextoModoDesarrollador();
 
+        // =============================
+        // 📂 Cargar datos desde assets
+        // =============================
         cargarArchivo("alertas.json", "alerta", alertas);
         cargarArchivo("guias.json", "guia", guias);
 
+        // =============================
+        // 🎛️ Eventos
+        // =============================
         botonAvanzar.setOnClickListener(v -> avanzarDia());
         botonReiniciar.setOnClickListener(v -> reiniciarSimulacionComun());
 
+        // =============================
+        // 🧪 Mostrar estado inicial
+        // =============================
         actualizarTextoModoDesarrollador();
         mostrarMensajesIniciales();
+    }
+
+    // ============================================================
+    // ⚙️ Configuración inicial al primer arranque
+    // ============================================================
+    private void configurarPrimerArranque() {
+        boolean primeraVez = preferencias.getBoolean("primer_arranque", true);
+        if (primeraVez) {
+            SharedPreferences.Editor editor = preferencias.edit();
+            // ⚠️ No borramos todo, para no perder nombreUsuario
+            editor.putBoolean("primer_arranque", false);
+            editor.putLong("fechaInicio", System.currentTimeMillis());
+            editor.putInt("diaActual", 1);
+            editor.putInt("indiceMensajeDia", 0);
+            editor.apply();
+        }
     }
 
     // ============================================================
@@ -84,15 +103,12 @@ public class VistaPrincipal extends BaseActivity {
         int diaActual = preferencias.getInt("diaActual", 1);
         int indice = preferencias.getInt("indiceMensajeDia", 0);
 
-        // 🔹 Obtener todos los pares alerta+guía del día actual
         List<List<Mensaje>> paresDia = obtenerParesDelDia(diaActual);
 
         if (indice < paresDia.size() - 1) {
-            // Hay más pares dentro del mismo día
             indice++;
             preferencias.edit().putInt("indiceMensajeDia", indice).apply();
         } else {
-            // Pasamos al siguiente día
             diaActual++;
             indice = 0;
             preferencias.edit()
@@ -102,6 +118,7 @@ public class VistaPrincipal extends BaseActivity {
         }
 
         Toast.makeText(this, "Avanzaste al día " + diaActual, Toast.LENGTH_SHORT).show();
+        mostrarTextoModoDesarrollador();
         mostrarMensajesIniciales();
     }
 
@@ -111,7 +128,7 @@ public class VistaPrincipal extends BaseActivity {
     protected void mostrarMensajesIniciales() {
         mostrados.clear();
 
-        // Mensaje inicial de ejemplo
+        // 🔹 Mensaje inicial de ejemplo
         mostrados.add(new Mensaje(
                 0,
                 "23/09/2025",
@@ -123,30 +140,28 @@ public class VistaPrincipal extends BaseActivity {
         int diaActual = preferencias.getInt("diaActual", 1);
         int indice = preferencias.getInt("indiceMensajeDia", 0);
 
-        // 🔹 Mostrar todos los días anteriores completos
+        // 🔹 Mostrar todos los días anteriores
         for (int d = 1; d < diaActual; d++) {
             List<List<Mensaje>> paresDia = obtenerParesDelDia(d);
-            for (List<Mensaje> par : paresDia) {
-                mostrados.addAll(par);
-            }
+            for (List<Mensaje> par : paresDia) mostrados.addAll(par);
         }
 
-        // 🔹 Mostrar los pares del día actual hasta el índice actual
+        // 🔹 Mostrar los pares del día actual
         List<List<Mensaje>> paresHoy = obtenerParesDelDia(diaActual);
         for (int i = 0; i <= indice && i < paresHoy.size(); i++) {
             mostrados.addAll(paresHoy.get(i));
         }
 
-        // 🔹 Ordenar por día (descendente)
+        // 🔹 Ordenar mensajes por día descendente
         Collections.sort(mostrados, (m1, m2) -> Integer.compare(m2.getDia(), m1.getDia()));
 
         recyclerMensajes.setAdapter(new AdaptadorMensajes(mostrados, this));
 
         textoFecha.setText("Hoy es " + obtenerFechaSimulada(diaActual));
 
-        // 🔔 Notificar solo el último mensaje nuevo (la alerta del par actual)
+        // 🔔 Notificar última alerta
         if (!paresHoy.isEmpty() && indice < paresHoy.size()) {
-            Mensaje nuevaAlerta = paresHoy.get(indice).get(0); // el primer mensaje del par (alerta)
+            Mensaje nuevaAlerta = paresHoy.get(indice).get(0);
             if ("alerta".equals(nuevaAlerta.getTipo()) && !yaNotificada(diaActual * 10 + indice)) {
                 reproducirSonido(nuevaAlerta);
                 mostrarNotificacion(nuevaAlerta);
@@ -162,8 +177,11 @@ public class VistaPrincipal extends BaseActivity {
         List<Mensaje> alertasDia = new ArrayList<>();
         List<Mensaje> guiasDia = new ArrayList<>();
 
-        for (Mensaje alerta : alertas) if (alerta.getDia() == dia) alertasDia.add(alerta);
-        for (Mensaje guia : guias) if (guia.getDia() == dia) guiasDia.add(guia);
+        for (Mensaje alerta : alertas)
+            if (alerta.getDia() == dia) alertasDia.add(alerta);
+
+        for (Mensaje guia : guias)
+            if (guia.getDia() == dia) guiasDia.add(guia);
 
         List<List<Mensaje>> pares = new ArrayList<>();
         int total = Math.max(alertasDia.size(), guiasDia.size());

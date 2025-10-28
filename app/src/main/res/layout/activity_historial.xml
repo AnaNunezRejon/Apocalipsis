@@ -12,7 +12,7 @@
 
     <!-- 🧪 INDICADOR DE MODO DESARROLLADOR -->
     <TextView
-        android:id="@+id/textoModoHistorial"
+        android:id="@+id/textoModo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/amarilloGobierno"

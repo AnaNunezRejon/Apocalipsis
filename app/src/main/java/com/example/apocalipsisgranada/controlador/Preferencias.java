@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import java.util.Map;
 
+/**
+ * En pocas palabras, es como un “archivo de configuración” donde tu app guarda datos sencillos (texto, números, booleanos...)
+ * para que sigan ahí aunque cierres o apagues la app.
+ */
 public class Preferencias{
 
     private static final String NOMBRE_PREFS = "configuracion";

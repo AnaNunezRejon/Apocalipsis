@@ -38,31 +38,29 @@ public class Mensaje {
 
     // ====== MÉTODOS AUXILIARES ======
     /**
-     * Devuelve el identificador del recurso de sonido
-     * según el tipo indicado en el JSON.
+     * Devuelve el identificador del recurso de sonido según el tipo indicado en el JSON.
      */
     public int obtenerRecursoSonido() {
         switch (sonido) {
             case "alarm_short":
-                return R.raw.alarm_short; // sonido leve
+                return R.raw.alarm_short;
             case "alert":
-                return R.raw.alert;       // tono fuerte
+                return R.raw.alert;
             case "gremlin_risa":
-                return R.raw.gremlin_risa;       // tono fuerte
+                return R.raw.gremlin_risa;
             case "alien_risa":
-                return R.raw.alien_risa;       // tono fuerte
+                return R.raw.alien_risa;
             case "sonido_raro":
-                return R.raw.sonido_raro;       // tono fuerte
+                return R.raw.sonido_raro;
             case "siren_warning":
-                return R.raw.siren_warning;       // sirena
+                return R.raw.siren_warning;
             default:
                 return 0; // sin sonido
         }
     }
 
     /**
-     * Indica si el mensaje debe generar una notificación del sistema.
-     * Solo las alertas lo hacen.
+     * Indica si el mensaje debe generar una notificación del sistema. Solo las alertas lo hacen.
      */
     public boolean debeMostrarNotificacion() {
         return tipo.equalsIgnoreCase("alerta");

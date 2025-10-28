@@ -24,26 +24,13 @@ public class VistaServicios extends BaseActivity {
 
         prefs = getSharedPreferences("configuracion", MODE_PRIVATE);
 
-
-        // 🔶 Texto de modo desarrollador (solo informativo)
-        textoModo = findViewById(R.id.textoModoHistorial);
-        if (textoModo != null) {
-            boolean modoDev = prefs.getBoolean("modoDesarrollador", false);
-            int diaActual = obtenerDiaActualSimulado();
-            if (modoDev) {
-                textoModo.setVisibility(TextView.VISIBLE);
-                textoModo.setText("🧪 Modo desarrollador — Día " + diaActual);
-            } else {
-                textoModo.setVisibility(TextView.GONE);
-            }
-        }
-
-        // 🟡 Cabecera y menú inferior unificados
+        // 🟡 Cargar metodos comunes
         configurarModoDesarrolladorComun();
         configurarMenuInferior();
-
+        actualizarCabecera();
         mostrarSaludoUsuario();
         actualizarColoresModoDesarrollador();
+        mostrarTextoModoDesarrollador();
 
         // 🏛 Configurar los bloques de servicios
         configurarServicio(R.id.itemPoliciaMunicipal, "Policía Municipal", "958111111", "https://granada.es/policia");
@@ -120,13 +107,5 @@ public class VistaServicios extends BaseActivity {
     private void abrirPaginaWeb(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
-    }
-
-    // ============================================================
-    // 🔁 ACTUALIZAR SERVICIOS (para el modo desarrollador)
-    // ============================================================
-    public void actualizarServicios() {
-        // Si algún día quieres que cambien los servicios según el día o evento,
-        // puedes hacerlo aquí. Por ahora no necesita refresco.
     }
 }

@@ -12,7 +12,7 @@
 
     <!-- 🧪 INDICADOR DE MODO DESARROLLADOR -->
     <TextView
-        android:id="@+id/textoModoHistorial"
+        android:id="@+id/textoModo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/amarilloGobierno"
@@ -67,12 +67,13 @@
                     android:minWidth="140dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center"
                         android:text="Datos de identidad\ny documentación"
                         android:textColor="@color/azulGobierno"
-                        android:textSize="13sp"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <!-- Tarjeta 2 -->
