@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     // ============================================================
 
     private boolean validarNombre(String texto) {
-        return texto != null && texto.length() > 3 &&
+        return texto != null && texto.length() > 0 &&
                 texto.matches("[A-Za-zÁÉÍÓÚáéíóúÑñ ]+");
     }
 

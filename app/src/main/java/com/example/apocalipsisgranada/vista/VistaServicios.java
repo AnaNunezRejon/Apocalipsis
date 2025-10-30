@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.apocalipsisgranada.R;
-import com.example.apocalipsisgranada.controlador.Controlador;
 
 public class VistaServicios extends AppCompatActivity {
 
@@ -20,15 +19,10 @@ public class VistaServicios extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servicios);
 
-        // 🟡 Cargar metodos comunes
-        Controlador.configurarModoDesarrolladorComun(this);
-        Controlador.configurarMenuInferior(this);
-        Controlador.actualizarCabecera(this);
-        Controlador.mostrarSaludoUsuario(this);
-        Controlador.actualizarColoresModoDesarrollador(this);
-        Controlador.mostrarTextoModoDesarrollador(this);
+        // Configura la cabecera, modo dev y menú inferior
+        ManejadorVistas.configurarElementosComunes(this);
 
-        // Configuramos los servicios
+        // Configura los distintos servicios disponibles
         configurarServicio(R.id.itemPoliciaMunicipal, "Policía Municipal", "958111111", "https://granada.es/policia");
         configurarServicio(R.id.itemGuardiaCivil, "Guardia Civil", "958222222", "https://www.guardiacivil.es/");
         configurarServicio(R.id.itemPoliciaNacional, "Policía Nacional", "958333333", "https://www.policia.es/");
@@ -42,21 +36,16 @@ public class VistaServicios extends AppCompatActivity {
     private void configurarServicio(int idVista, String nombre, String telefono, String url) {
         LinearLayout servicio = findViewById(idVista);
 
-        // Si no se encuentra la vista en el layout
         if (servicio == null) {
             Toast.makeText(this, "Error: vista no encontrada para " + nombre, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Escribimos el nombre (y el teléfono si existe)
         TextView textoServicio = servicio.findViewById(R.id.textoServicio);
-        if (telefono != null) {
-            textoServicio.setText(nombre + " - " + telefono);
-        } else {
-            textoServicio.setText(nombre);
+        if (textoServicio != null) {
+            textoServicio.setText(telefono != null ? nombre + " - " + telefono : nombre);
         }
 
-        // Cuando se pulse el bloque, mostramos las opciones (llamar / abrir web)
         servicio.setOnClickListener(v -> mostrarOpcionesServicio(nombre, telefono, url));
     }
 
@@ -65,10 +54,8 @@ public class VistaServicios extends AppCompatActivity {
     // ============================================================
     private void mostrarOpcionesServicio(String titulo, String telefono, String url) {
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
-        //AlertDialog es una ventana emergente (un cuadro de diálogo) que aparece encima de la pantalla principal de tu app para mostrar un mensaje, pedir confirmación o mostrar opciones.
         dialogo.setTitle(titulo);
 
-        // Si el servicio tiene teléfono → mostrar las dos opciones
         if (telefono != null) {
             dialogo.setItems(new CharSequence[]{
                     "📞 Llamar a " + titulo,
@@ -83,9 +70,7 @@ public class VistaServicios extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-        }
-        // Si NO tiene teléfono → solo mostrar opción de web
-        else {
+        } else {
             dialogo.setItems(new CharSequence[]{
                     "🌐 Abrir web oficial",
                     "❌ Cancelar"
