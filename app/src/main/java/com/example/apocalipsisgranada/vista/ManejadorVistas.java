@@ -102,7 +102,7 @@ public class ManejadorVistas {
         SharedPreferences prefs = activity.getSharedPreferences("configuracion", Context.MODE_PRIVATE);
         boolean modoDev = prefs.getBoolean("modoDesarrollador", false);
 
-        // 🟩 Cabecera
+        // Cabecera
         LinearLayout cabecera = activity.findViewById(R.id.cabecera);
         if (cabecera != null) {
             int colorCabecera = activity.getResources().getColor(
@@ -110,7 +110,7 @@ public class ManejadorVistas {
             cabecera.setBackgroundColor(colorCabecera);
         }
 
-        // 🩷 Botones modo desarrollador
+        // Botones modo desarrollador
         Button botonAvanzar = activity.findViewById(R.id.botonAvanzar);
         Button botonReiniciar = activity.findViewById(R.id.botonReiniciar);
         if (botonAvanzar != null) {
@@ -122,7 +122,7 @@ public class ManejadorVistas {
                     modoDev ? R.color.rosaDev : R.color.rojoBandera));
         }
 
-        // ⚫ ESCUDO: cambia entre el normal y el negro
+        // ESCUDO: cambia entre el normal y el negro
         ImageView escudo = activity.findViewById(R.id.escudo);
         if (escudo != null) {
             escudo.setImageResource(modoDev ? R.drawable.escudo_espania_negro : R.drawable.escudo_espania);
@@ -153,7 +153,7 @@ public class ManejadorVistas {
 
 
     // ============================================================
-    // 🚪 CERRAR SESIÓN (vuelve al login y limpia preferencias)
+    // CERRAR SESIÓN (vuelve al login y limpia preferencias)
     // ============================================================
     public static void cerrarSesion(Activity activity) {
         SharedPreferences prefs = activity.getSharedPreferences("configuracion", Context.MODE_PRIVATE);
@@ -223,7 +223,7 @@ public class ManejadorVistas {
             });
         }
 
-        // 🌟 (opcional bonito) → marcar el botón activo con menos opacidad en la Activity actual
+        // marcar el botón activo con menos opacidad en la Activity actual
         marcarSeccionActual(activity, botonInicio, botonGuia, botonHistorial, botonServicios);
     }
 
@@ -267,3 +267,152 @@ public class ManejadorVistas {
         botonServicios.setAlpha(alphaServicios);
     }
 }
+/**
+ * ============================================================
+ * 🧩 Clase: ManejadorVistas.java
+ * ============================================================
+ *
+ * Se encarga de **gestionar y actualizar los elementos visuales comunes**
+ * de todas las pantallas (vistas) de la aplicación:
+ *
+ * - Cabecera (nombre, fecha, escudo, botón cerrar sesión)
+ * - Modo desarrollador (color, texto, botones especiales)
+ * - Colores dinámicos según el estado del juego o modo dev
+ *
+ * Actúa como el “cerebro visual” del proyecto, coordinando la parte
+ * gráfica mientras `Controlador` maneja la lógica y `Preferencias` la persistencia.
+ *
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ **configurarElementosComunes(Activity activity)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Inicializa todos los elementos compartidos de la interfaz
+ *     que deben estar presentes en cualquier vista:
+ *       - Cabecera con saludo, fecha y escudo.
+ *       - Indicador del modo desarrollador.
+ *       - Botones de avance / reinicio (solo visibles en modo dev).
+ *
+ *   ➤ Qué hace:
+ *     - Llama a `mostrarSaludoUsuario()` para mostrar el nombre actual.
+ *     - Usa `Controlador.obtenerFechaSimulada()` para calcular la fecha.
+ *     - Configura el texto del modo desarrollador si está activo.
+ *     - Cambia los colores visuales según el modo actual.
+ *
+ *   ➤ Interacción:
+ *     - Se invoca desde cada Activity (VistaPrincipal, VistaGuia, VistaHistorial...).
+ *     - Asegura coherencia visual entre todas las pantallas.
+ *
+ * ------------------------------------------------------------
+ *
+ * 2️⃣ **mostrarSaludoUsuario(Activity activity)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Muestra el texto de bienvenida en la cabecera,
+ *     recuperando el nombre del usuario almacenado en `SharedPreferences`.
+ *
+ *   ➤ Qué hace:
+ *     - Lee `nombreUsuario` del archivo de preferencias.
+ *     - Escribe “Hola [NOMBRE]” en el `TextView` correspondiente.
+ *     - Asocia un listener al texto “Cerrar sesión” para
+ *       ejecutar `Preferencias.cerrarSesion(context)` y volver al login.
+ *
+ *   ➤ Interacción:
+ *     - Llamada automática al abrir cualquier vista.
+ *     - Facilita la desconexión rápida del usuario desde la cabecera.
+ *
+ * ------------------------------------------------------------
+ *
+ * 3️⃣ **actualizarCabecera(Activity activity, String fechaFormateada)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Actualiza dinámicamente el texto que muestra la fecha simulada
+ *     en la cabecera (por ejemplo: “Hoy es martes, 14 de octubre de 2025”).
+ *
+ *   ➤ Qué hace:
+ *     - Localiza el `TextView` de la fecha.
+ *     - Inserta el texto recibido formateado desde `Controlador.obtenerFechaSimulada()`.
+ *
+ *   ➤ Interacción:
+ *     - Llamada desde `Controlador.avanzarDiaComun()` o `reiniciarSimulacionComun()`
+ *       cada vez que se avanza de día o se reinicia la historia.
+ *
+ * ------------------------------------------------------------
+ *
+ * 4️⃣ **mostrarTextoModoDesarrollador(Activity activity, int diaActual)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Muestra o esconde la franja amarilla/verde con el texto
+ *     “🧪 Modo desarrollador — Día X” dependiendo del estado del modo.
+ *
+ *   ➤ Qué hace:
+ *     - Lee `modoDesarrollador` de las preferencias.
+ *     - Si está activo → muestra el `TextView` y actualiza el texto con el día actual.
+ *     - Si no está activo → oculta el componente (`setVisibility(GONE)`).
+ *
+ *   ➤ Interacción:
+ *     - Llamada automáticamente al iniciar la vista.
+ *     - También se llama desde `Controlador` cuando el usuario activa el modo dev.
+ *
+ * ------------------------------------------------------------
+ *
+ * 5️⃣ **actualizarColoresModoDesarrollador(Activity activity)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Cambia los colores visuales principales de la interfaz
+ *     según si el modo desarrollador está activado o no.
+ *
+ *   ➤ Qué hace:
+ *     - Cambia el color de fondo de la cabecera.
+ *     - Modifica el color de los botones “Avanzar” y “Reiniciar”.
+ *     - Sustituye el escudo de España normal por la versión negra en modo dev.
+ *     - Si el modo dev está desactivado, restaura los colores originales.
+ *
+ *   ➤ Interacción:
+ *     - Llamado desde `configurarElementosComunes()` y `Controlador.avanzarDiaComun()`.
+ *     - Se ejecuta cada vez que se activa o desactiva el modo desarrollador.
+ *
+ * ------------------------------------------------------------
+ * 🧠 Flujo de uso en conjunto con otras clases
+ * ------------------------------------------------------------
+ *
+ * - `VistaPrincipal`, `VistaGuia`, `VistaHistorial` → llaman a `configurarElementosComunes()`
+ *     para que todo se pinte igual en cada pantalla.
+ *
+ * - `Controlador` → usa `actualizarCabecera()` y `mostrarTextoModoDesarrollador()`
+ *     tras avanzar de día o reiniciar.
+ *
+ * - `Preferencias` → provee la información (usuario, modo dev, día actual)
+ *     que `ManejadorVistas` muestra visualmente.
+ *
+ * ------------------------------------------------------------
+ * 🎨 Elementos visuales gestionados
+ * ------------------------------------------------------------
+ *
+ *   🟨 Cabecera:
+ *      - Nombre del usuario.
+ *      - Fecha simulada.
+ *      - Escudo (normal o negro).
+ *      - Texto “Cerrar sesión”.
+ *
+ *   🟢 Modo desarrollador:
+ *      - Franja amarilla o verde.
+ *      - Botones “AVANZAR DÍA” y “REINICIAR DÍAS”.
+ *
+ * ------------------------------------------------------------
+ * 💡 En resumen:
+ * ------------------------------------------------------------
+ *
+ * `ManejadorVistas.java` coordina todos los **elementos visuales comunes**
+ * para que cada pantalla mantenga coherencia con el resto.
+ *
+ * ✔️ Unifica el aspecto visual de toda la app.
+ * ✔️ Reacciona automáticamente al estado del modo desarrollador.
+ * ✔️ Facilita la interacción con `Controlador` y `Preferencias`.
+ * ✔️ Reduce código duplicado en las vistas individuales.
+ *
+ * ============================================================
+ */
+

@@ -329,3 +329,97 @@ public class Controlador {
         }
     }
 }
+
+/**
+ * ============================================================
+ * 🧠 Clase: Controlador.java
+ * ============================================================
+ *
+ * Esta clase centraliza toda la **lógica funcional y de coordinación**
+ * de la aplicación “Apocalipsis Granada”.
+ *
+ * Es el **núcleo del patrón MVC**, actuando como puente entre el modelo
+ * (datos, mensajes, preferencias) y las vistas (interfaces gráficas).
+ *
+ * Gestiona eventos, notificaciones, sonidos, el modo desarrollador,
+ * la linterna SOS y el avance del juego día a día.
+ *
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ **Modo desarrollador**
+ *    - Detecta 5 toques en el escudo del Gobierno.
+ *    - Activa o desactiva el modo desarrollador en SharedPreferences.
+ *    - Recarga la actividad actual para aplicar cambios visuales.
+ *    - Muestra mensajes de confirmación (“Modo desarrollador ACTIVADO/DESACTIVADO”).
+ *
+ * 2️⃣ **Avance de simulación**
+ *    - Controla el día actual (`diaActual`) y el índice del mensaje (`indiceMensajeDia`).
+ *    - Si aún quedan mensajes del día → muestra el siguiente.
+ *    - Si no → pasa al siguiente día.
+ *    - Reproduce sonido, notificación y actualiza vistas.
+ *
+ * 3️⃣ **Reinicio de simulación**
+ *    - Restablece el progreso (día 1, índice 0, fecha inicial).
+ *    - Mantiene el estado del modo desarrollador activo o no.
+ *    - Notifica con un mensaje “Reiniciado al día 1”.
+ *
+ * 4️⃣ **Procesamiento de alertas**
+ *    - Lee `alertas.json` desde /assets.
+ *    - Busca las alertas correspondientes al día actual.
+ *    - Muestra solo la alerta o guía que toca según el índice.
+ *    - Reproduce el sonido y lanza la notificación del Gobierno.
+ *
+ * 5️⃣ **Notificaciones y sonido**
+ *    - Usa `NotificationCompat` para mostrar avisos del “Gobierno de España”.
+ *    - Cada mensaje puede incluir vibración y texto expandido.
+ *    - Los sonidos se gestionan con `MediaPlayer` y se asocian al tipo de alerta.
+ *
+ * 6️⃣ **Evento especial — Día 14 (23:00h)**
+ *    - Activa la linterna del dispositivo en patrón **SOS (... --- ...)**
+ *    - Simula una alerta máxima del Gobierno.
+ *
+ * ------------------------------------------------------------
+ * 🗂️ Datos gestionados (SharedPreferences)
+ * ------------------------------------------------------------
+ *  - nombreUsuario → Nombre introducido en el login
+ *  - diaActual → Día simulado actual
+ *  - indiceMensajeDia → Índice del mensaje dentro del día
+ *  - fechaInicio → Fecha base desde la que se simula el paso de días
+ *  - modoDesarrollador → Estado del modo oculto (true/false)
+ *
+ * ------------------------------------------------------------
+ * 🎨 Integración visual
+ * ------------------------------------------------------------
+ *  - ManejadorVistas.java → Se encarga de los cambios visuales (cabecera, colores, menú).
+ *  - VistaPrincipal.java → Recibe los mensajes y alertas del día.
+ *  - VistaGuia.java → Muestra las guías diarias.
+ *  - VistaHistorial.java → Lista todas las alertas pasadas.
+ *
+ * ------------------------------------------------------------
+ * 🔁 Flujo resumido
+ * ------------------------------------------------------------
+ *  🧭 Usuario abre app → Login (guarda nombre y arranque día 1)
+ *  📅 VistaPrincipal → Carga mensajes del día actual
+ *  ⚙️ Controlador → Comprueba modo desarrollador, muestra alertas
+ *  🔔 Procesa notificaciones y sonidos según el día
+ *  🚨 Día 14 a las 23:00 → Linterna SOS
+ *
+ * ------------------------------------------------------------
+ * 💡 En resumen:
+ * ------------------------------------------------------------
+ *
+ * `Controlador.java` es el **centro lógico del proyecto**,
+ * responsable de toda la interacción entre la historia, los eventos y las vistas.
+ *
+ * Gestiona el avance, la persistencia, las alertas y las funciones especiales,
+ * manteniendo el equilibrio entre jugabilidad e inmersión narrativa.
+ *
+ * Su diseño modular permite mantener las vistas simples y enfocadas
+ * únicamente en la interfaz gráfica, mientras la lógica queda
+ * completamente encapsulada aquí.
+ *
+ * ============================================================
+ */
+

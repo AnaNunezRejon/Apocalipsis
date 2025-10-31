@@ -198,3 +198,109 @@ public class VistaPrincipal extends AppCompatActivity {
     }
 }
 
+/**
+ * ============================================================
+ * 🏛️ Clase: VistaPrincipal.java
+ * ============================================================
+ *
+ * Representa la **pantalla central** de la aplicación “Apocalipsis Granada”.
+ *
+ * Es la vista principal del usuario, donde se muestra la **historia diaria** del juego:
+ * las alertas del Gobierno y las guías de actuación correspondientes al día actual.
+ *
+ * Forma parte del patrón MVC como la **VISTA principal**,
+ * encargada exclusivamente de mostrar los datos que le proporciona el Controlador.
+ *
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ **Carga inicial de la vista**
+ *     - Infla el layout `activity_principal.xml`.
+ *     - Configura los componentes visuales comunes (cabecera, menú inferior, modo dev).
+ *     - Obtiene el día actual desde SharedPreferences.
+ *     - Muestra los mensajes correspondientes (alerta + guía) del día.
+ *
+ * 2️⃣ **Gestión de mensajes**
+ *     - Utiliza un `RecyclerView` con un `AdaptadorMensajes` personalizado.
+ *     - Carga los datos desde los archivos JSON (`alertas.json` y `guias.json`).
+ *     - Muestra los mensajes combinados (alerta + guía) de cada día.
+ *     - Reacciona al avance de día actualizando el contenido mostrado.
+ *
+ * 3️⃣ **Integración con el Controlador**
+ *     - Llama a `Controlador.configurarModoDesarrolladorComun(this)` para:
+ *         - Detectar toques en el escudo.
+ *         - Habilitar los botones de avanzar y reiniciar en modo desarrollador.
+ *     - Usa `Controlador.procesarAlertasDelDia()` para generar sonidos y notificaciones.
+ *     - Actualiza la fecha simulada mediante `Controlador.obtenerFechaSimulada()`.
+ *
+ * 4️⃣ **Integración con ManejadorVistas**
+ *     - `ManejadorVistas.configurarElementosComunes(this)` → carga cabecera y menú.
+ *     - `ManejadorVistas.mostrarTextoModoDesarrollador()` → muestra barra “🧪 Modo desarrollador”.
+ *     - `ManejadorVistas.actualizarColoresModoDesarrollador()` → aplica los colores dev (verde/rosa).
+ *
+ * ------------------------------------------------------------
+ * 🗂️ Elementos visuales destacados
+ * ------------------------------------------------------------
+ *
+ *  Layout: `activity_principal.xml`
+ *
+ *  - 🟨 **Cabecera reutilizada:** `@layout/cabecera`
+ *      - Escudo (activa modo desarrollador)
+ *      - TextView saludo (“Hola, [usuario]”)
+ *      - Fecha simulada (“Hoy es lunes, 27 de octubre de 2025”)
+ *
+ *  - 🧪 **Indicador modo desarrollador:**
+ *      - `@id/textoModo` → barra amarilla o verde según el modo.
+ *
+ *  - 💬 **Centro de mensajes (RecyclerView):**
+ *      - `@id/recyclerPrincipal` → lista los mensajes del día actual.
+ *
+ *  - ⚫ **Colores dinámicos según el modo:**
+ *      - Modo normal → Amarillo + Azul Gobierno.
+ *      - Modo desarrollador → Verde + Rosa.
+ *
+ * ------------------------------------------------------------
+ * 🔁 Flujo de funcionamiento
+ * ------------------------------------------------------------
+ *
+ *  1️⃣ Al iniciar la app, se carga VistaPrincipal.
+ *  2️⃣ Se lee el usuario y día actual desde SharedPreferences.
+ *  3️⃣ Se configuran cabecera, menú inferior y modo desarrollador.
+ *  4️⃣ Se obtienen las alertas y guías del día mediante el Controlador.
+ *  5️⃣ Se muestran en el RecyclerView.
+ *  6️⃣ Al pulsar “Avanzar día”:
+ *      - El Controlador incrementa el día o el índice.
+ *      - Se actualizan mensajes, sonidos y notificaciones.
+ *  7️⃣ Si se alcanza el día 14 a las 23:00 → se activa la linterna SOS.
+ *
+ * ------------------------------------------------------------
+ * 🧩 Integración con otras vistas
+ * ------------------------------------------------------------
+ *
+ *  - **VistaGuia.java** → lista todas las guías pasadas.
+ *  - **VistaHistorial.java** → muestra alertas anteriores.
+ *  - **VistaServicios.java** → enlaces rápidos a servicios oficiales.
+ *  - **ManejadorVistas.java** → gestiona la interfaz visual común.
+ *  - **Controlador.java** → controla la lógica y el avance de días.
+ *
+ * ------------------------------------------------------------
+ * 💡 En resumen:
+ * ------------------------------------------------------------
+ *
+ * `VistaPrincipal.java` es el **centro narrativo y visual** del proyecto.
+ *
+ * Su misión es mostrar al jugador la evolución de la historia día a día,
+ * conectando la interfaz (RecyclerView, cabecera, menú) con la lógica del
+ * Controlador.
+ *
+ * Gracias a su integración con `ManejadorVistas`, mantiene coherencia visual
+ * con el resto de pantallas, adaptando automáticamente colores, menús y
+ * elementos del modo desarrollador.
+ *
+ * Es la pantalla que define la experiencia principal del usuario.
+ *
+ * ============================================================
+ */
+
+

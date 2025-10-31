@@ -105,92 +105,58 @@ public class AdaptadorMensajes extends RecyclerView.Adapter<AdaptadorMensajes.Vi
 }
 
 /**
- * 💬 Resumen rápido del flujo — AdaptadorMensajes.java
+ * ============================================================
+ * 💬 Clase: AdaptadorMensajes.java
+ * ============================================================
  *
- * Esta clase controla **cómo se muestran los mensajes (alertas o guías)**
- * dentro del RecyclerView.
- * El RecyclerView es la lista que se ve en pantalla, pero necesita un "puente"
- * para saber **qué dibujar** y **cómo hacerlo**.
- * Ese puente es el AdaptadorMensajes.
+ * Adaptador personalizado para enlazar los datos del modelo `Mensaje`
+ * con el `RecyclerView` utilizado en las vistas principales
+ * (VistaPrincipal, VistaHistorial, VistaGuia).
  *
- * 🧠 En resumen:
- * RecyclerView = la caja donde se muestran los mensajes 📦
- * AdaptadorMensajes = el repartidor que decide qué mensaje va en cada posición 🧍‍♂️
- * VistaMensaje = la plantilla de una sola carta o fila 🧾
+ * Es responsable de **inflar el diseño de cada tarjeta de mensaje**
+ * y aplicar los estilos visuales según el tipo de contenido.
  *
- * ============================================================
- * 🧩 Estructura general
- * ============================================================
- * AdaptadorMensajes extiende de RecyclerView.Adapter
- * ├─ Eso significa que "adapta" los datos de una lista (List<Mensaje>)
- * │  para que puedan mostrarse en la interfaz.
- * └─ Usa una clase interna llamada VistaMensaje (un ViewHolder)
- *    que representa una sola tarjeta de mensaje.
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales
+ * ------------------------------------------------------------
  *
- * ============================================================
- * 🟩 Constructor AdaptadorMensajes(List<Mensaje>, Context)
- * ============================================================
- * ├─ Recibe la lista de mensajes (alertas y guías)
- * └─ Recibe el contexto (para poder acceder a colores, recursos, etc.)
+ * 1️⃣ **onCreateViewHolder()**
+ *     - Infla el layout de tarjeta (`item_mensaje.xml`).
  *
- * ============================================================
- * 🧱 onCreateViewHolder(@NonNull ViewGroup padre, int tipoVista)
- * ============================================================
- * ├─ Se ejecuta cuando el RecyclerView necesita crear un nuevo “item”.
- * ├─ Infla (crea) la vista de cada mensaje usando el XML item_mensajes.xml.
- * └─ Devuelve un nuevo objeto VistaMensaje que contendrá esa vista.
+ * 2️⃣ **onBindViewHolder()**
+ *     - Asigna los datos del mensaje (texto, fecha, tipo).
+ *     - Cambia el color y estilo según el tipo de mensaje:
+ *         🟡 Alerta → fondo amarillo / texto oscuro.
+ *         🔵 Guía → fondo azul / texto blanco.
  *
- * ============================================================
- * 🖋️ onBindViewHolder(@NonNull VistaMensaje vista, int posicion)
- * ============================================================
- * ├─ Se ejecuta cada vez que hay que mostrar un mensaje en pantalla.
- * ├─ Obtiene el mensaje correspondiente a la posición de la lista.
- * ├─ Rellena los campos:
- * │     textoMensaje → el contenido del mensaje (alerta o guía)
- * │     textoFecha   → la fecha simulada
- * ├─ Cambia los colores según el tipo:
- * │     🟦 “guia” → fondo azul claro, texto blanco
- * │     ⚪ “alerta” → fondo blanco, texto oscuro
- * └─ Así cada tipo de mensaje tiene su estilo visual.
+ * 3️⃣ **getItemCount()**
+ *     - Devuelve el número total de mensajes a mostrar.
  *
- * ============================================================
- * 📏 getItemCount()
- * ============================================================
- * ├─ Devuelve cuántos mensajes hay en total en la lista.
- * └─ El RecyclerView lo usa para saber cuántas filas dibujar.
+ * ------------------------------------------------------------
+ * 🗂️ Elementos visuales manejados
+ * ------------------------------------------------------------
  *
- * ============================================================
- * 🧾 Clase interna estática VistaMensaje (extends RecyclerView.ViewHolder)
- * ============================================================
- * ├─ Representa una “fila” del RecyclerView.
- * ├─ Contiene las vistas que forman un mensaje:
- * │     - TextView textoMensaje
- * │     - TextView textoFecha
- * │     - LinearLayout contenedorMensaje
- * ├─ En su constructor, busca los elementos con findViewById().
- * └─ Sirve como “molde reutilizable” para que el RecyclerView no cree vistas nuevas
- *    cada vez, sino que las recicle (de ahí su nombre: RecyclerView ♻️).
+ * - `@id/textoMensaje` → cuerpo del mensaje.
+ * - `@id/textoFecha` → fecha de emisión.
+ * - `@id/contenedorMensaje` → tarjeta visual de fondo.
+ *
+ * ------------------------------------------------------------
+ * 🔁 Flujo de funcionamiento
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ La vista crea el adaptador pasando la lista de mensajes.
+ * 2️⃣ Cada elemento se muestra en el RecyclerView.
+ * 3️⃣ Si el día cambia, la lista se actualiza con los nuevos mensajes.
+ *
+ * ------------------------------------------------------------
+ * 💡 En resumen:
+ * ------------------------------------------------------------
+ *
+ * `AdaptadorMensajes.java` traduce los datos del modelo
+ * en una presentación visual uniforme, estética y funcional.
+ *
+ * Es la pieza clave para conectar la narrativa (los mensajes)
+ * con la experiencia visual del usuario.
  *
  * ============================================================
- * 🧩 En resumen:
- *  AdaptadorMensajes:
- *   - Crea la plantilla de cada mensaje.
- *   - La rellena con los datos correctos.
- *   - Le da estilo (color, fondo, texto).
- *   - Indica cuántos mensajes hay que mostrar.
- *
- * 🔁 Relación con otras clases:
- *  ├─ VistaPrincipal → crea AdaptadorMensajes(mostrados, this)
- *  ├─ VistaGuia → crea AdaptadorMensajes(listaGuias, this)
- *  └─ VistaHistorial → crea AdaptadorMensajes(listaAlertas, this)
- *
- * 💡 Conceptos clave:
- *  - RecyclerView.Adapter: clase que conecta los datos con la interfaz.
- *  - ViewHolder: patrón que optimiza la memoria reciclando vistas.
- *  - Context: permite acceder a recursos, colores, layouts, etc.
- *  - @NonNull: indica que un parámetro o retorno no puede ser null.
- *
- * En definitiva, este archivo se encarga de **mostrar correctamente cada mensaje**
- * en pantalla con su color, texto y fecha, de forma optimizada y ordenada.
  */
-

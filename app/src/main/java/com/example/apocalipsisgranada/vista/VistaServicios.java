@@ -102,3 +102,63 @@ public class VistaServicios extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
+
+/**
+ * ============================================================
+ * 🏛️ Clase: VistaServicios.java
+ * ============================================================
+ *
+ * Ofrece una lista interactiva de **servicios oficiales y de emergencia**
+ * (Policía, Guardia Civil, Ejército, Administración pública, etc.).
+ *
+ * Permite al usuario llamar directamente o abrir la web correspondiente.
+ *
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ Carga el layout `activity_servicios.xml`.
+ * 2️⃣ Configura los elementos visuales comunes (cabecera, menú inferior).
+ * 3️⃣ Usa el método `configurarServicio()` para registrar cada institución.
+ * 4️⃣ Cada bloque muestra su nombre, teléfono (si aplica) y web.
+ * 5️⃣ Al pulsar un servicio → abre un `AlertDialog` con opciones:
+ *      - 📞 Llamar
+ *      - 🌐 Abrir web
+ *      - ❌ Cancelar
+ *
+ * ------------------------------------------------------------
+ * 📞 Funciones auxiliares
+ * ------------------------------------------------------------
+ *
+ * - `realizarLlamada(String numero)` → abre la app de teléfono.
+ * - `abrirPaginaWeb(String url)` → lanza el navegador predeterminado.
+ *
+ * ------------------------------------------------------------
+ * 🗂️ Elementos visuales destacados
+ * ------------------------------------------------------------
+ *
+ * - `@id/itemPoliciaMunicipal`, `@id/itemGuardiaCivil`, etc. → bloques de servicios.
+ * - `@id/textoServicio` → muestra el texto del servicio con número o web.
+ *
+ * ------------------------------------------------------------
+ * 🔁 Flujo de funcionamiento
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ El usuario entra a la vista desde el menú inferior.
+ * 2️⃣ Ve la lista de servicios configurados.
+ * 3️⃣ Al tocar uno, se abre un cuadro de diálogo con opciones de contacto.
+ * 4️⃣ Puede llamar o abrir la web oficial.
+ *
+ * ------------------------------------------------------------
+ * 💡 En resumen:
+ * ------------------------------------------------------------
+ *
+ * `VistaServicios.java` es una vista funcional, clara y útil,
+ * que mantiene la estética institucional del proyecto.
+ *
+ * Refuerza el realismo del universo del juego mostrando recursos
+ * auténticos del Gobierno español y sus organismos.
+ *
+ * ============================================================
+ */

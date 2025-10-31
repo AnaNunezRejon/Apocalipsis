@@ -108,3 +108,52 @@ public class VistaGuia extends AppCompatActivity {
         cargarGuias();
     }
 }
+
+
+/**
+ * ============================================================
+ * 📘 Clase: VistaGuia.java
+ * ============================================================
+ *
+ * Presenta la **colección de guías y consejos** emitidos por el Gobierno de España
+ * durante la simulación del apocalipsis.
+ *
+ * Es una vista complementaria a la principal, centrada únicamente en las guías.
+ *
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ Carga el layout `activity_guia.xml`.
+ * 2️⃣ Configura cabecera, menú inferior y modo desarrollador.
+ * 3️⃣ Obtiene las guías del día actual desde `Controlador` y las muestra.
+ * 4️⃣ Permite actualizar el contenido al avanzar de día.
+ *
+ * ------------------------------------------------------------
+ * 🗂️ Elementos visuales destacados
+ * ------------------------------------------------------------
+ *
+ * - `@id/recyclerGuia` → lista de recomendaciones y protocolos diarios.
+ * - `@id/textoModo` → indicador de modo desarrollador.
+ * - `@layout/cabecera` → zona superior con saludo, fecha y escudo.
+ *
+ * ------------------------------------------------------------
+ * 🔁 Flujo de funcionamiento
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ Al iniciar, se cargan las guías correspondientes al `diaActual`.
+ * 2️⃣ Cada guía se muestra en el RecyclerView usando el `AdaptadorMensajes`.
+ * 3️⃣ Si el modo desarrollador está activo, se actualiza visualmente la cabecera y colores.
+ *
+ * ------------------------------------------------------------
+ * 💡 En resumen:
+ * ------------------------------------------------------------
+ *
+ * `VistaGuia.java` muestra los mensajes de **orientación y ayuda oficial**
+ * del día actual o días previos, reforzando la narrativa de supervivencia.
+ *
+ * Su implementación modular la mantiene sincronizada con `VistaPrincipal`
+ * sin duplicar código de lógica o interfaz.
+ *
+ * ============================================================
+ */

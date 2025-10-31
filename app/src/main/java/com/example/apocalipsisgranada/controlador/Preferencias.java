@@ -95,88 +95,120 @@ public class Preferencias{
 }
 
 /**
- * 💾 Resumen rápido del flujo — Preferencias.java
+ * ============================================================
+ * ⚙️ Clase: Preferencias.java
+ * ============================================================
  *
- * Esta clase maneja **las configuraciones guardadas del usuario**.
- * Usa un sistema llamado SharedPreferences para guardar datos sencillos
- * (como el nombre del usuario, el día actual o si está activado el modo desarrollador).
+ * Gestiona el almacenamiento y recuperación de datos persistentes
+ * mediante `SharedPreferences`.
  *
- * 🧠 En resumen:
- * Es como una pequeña libreta de notas donde la app guarda datos
- * que deben mantenerse aunque cierres o apagues el móvil.
+ * Actúa como un **módulo de utilidades** dentro del patrón MVC,
+ * separando la lógica de guardado, reinicio y mantenimiento
+ * de sesión del resto de las clases (VistaPrincipal, Controlador, etc.).
  *
- * ============================================================
- * 🗂️ Estructura general
- * ============================================================
- * NOMBRE_PREFS → “configuracion”
- * Es el nombre del archivo donde se guardan las preferencias.
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales (explicadas en detalle)
+ * ------------------------------------------------------------
  *
- * getPrefs(Context context)
- * ├─ Devuelve el acceso al archivo de preferencias de la app.
- * └─ Lo usan todos los demás métodos para leer o escribir datos.
+ * 1️⃣ **guardarSesion(Context context, String usuario)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Se llama cuando el usuario inicia sesión desde `VistaLogin`.
+ *     Inicializa todos los valores básicos del juego y guarda
+ *     el nombre del jugador y la fecha de inicio de la simulación.
  *
- * ============================================================
- * 🟢 guardarNombreUsuario(Context, String)
- * ============================================================
- * ├─ Guarda el nombre del usuario en las preferencias.
- * ├─ Usa .edit() para abrir el modo de edición.
- * ├─ Usa .putString("nombreUsuario", nombre) para escribir el valor.
- * └─ Usa .commit() para guardar inmediatamente los cambios.
- *    (commit guarda al instante, apply lo hace en segundo plano)
+ *   ➤ Qué guarda exactamente:
+ *     - `nombreUsuario`: el nombre introducido en el login.
+ *     - `fechaInicio`: la hora actual del sistema (marca el día 1).
+ *     - `diaActual`: el primer día de la simulación (valor 1).
+ *     - `indiceMensajeDia`: el primer mensaje del día (valor 0).
+ *     - `modoDesarrollador`: desactivado por defecto (false).
  *
- * ============================================================
- * 🔍 obtenerNombreUsuario(Context)
- * ============================================================
- * ├─ Devuelve el nombre del usuario guardado.
- * └─ Si no existe, devuelve una cadena vacía "".
+ *   ➤ Por qué se usa `apply()`:
+ *     El método `apply()` guarda los datos de forma asíncrona
+ *     (sin bloquear la interfaz) y es más eficiente que `commit()`.
  *
- * ============================================================
- * ✅ hayUsuario(Context)
- * ============================================================
- * ├─ Comprueba si ya hay un usuario guardado.
- * ├─ Llama a obtenerNombreUsuario().
- * └─ Devuelve true si el nombre no está vacío o null.
+ *   ➤ Interacción:
+ *     - Se llama una vez en `VistaLogin` al pulsar “Iniciar sesión”.
+ *     - Permite que al abrir `VistaPrincipal` ya haya datos válidos.
  *
- * ============================================================
- * 🚪 cerrarSesion(Context)
- * ============================================================
- * ├─ Borra el nombre del usuario y las alertas guardadas.
- * ├─ Usa editor.remove("nombreUsuario").
- * ├─ También borra todas las claves que empiecen por "notificado_dia_".
- * ├─ Llama a commit() para guardar los cambios inmediatamente.
- * └─ Así, cuando el usuario cierre sesión, empieza desde cero.
+ * ------------------------------------------------------------
  *
- * ============================================================
- * 🔁 reiniciarSimulacion(Context, boolean modoDev)
- * ============================================================
- * ├─ Reinicia la simulación al día 1.
- * ├─ Limpia todas las preferencias, pero mantiene:
- * │     - El nombre de usuario actual.
- * │     - El estado del modo desarrollador.
- * ├─ Guarda de nuevo:
- * │     - nombreUsuario
- * │     - modoDesarrollador
- * │     - diaActual = 1
- * │     - fechaInicio = hora actual del sistema
- * └─ Usa commit() para asegurarse de que se guarde todo inmediatamente.
+ * 2️⃣ **cerrarSesion(Context context)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Elimina todas las preferencias guardadas del usuario actual.
+ *     Se usa cuando se pulsa el texto **"Cerrar sesión"** en la cabecera.
  *
- * ============================================================
+ *   ➤ Qué hace:
+ *     - Abre el archivo de preferencias “configuracion”.
+ *     - Borra todas las claves guardadas (`clear()`).
+ *     - Guarda el cambio inmediatamente con `apply()`.
+ *
+ *   ➤ Resultado:
+ *     - El usuario pierde el progreso y el modo desarrollador.
+ *     - La aplicación queda lista para volver al login.
+ *
+ *   ➤ Interacción:
+ *     - Se llama desde `ManejadorVistas` cuando el usuario toca “Cerrar sesión”.
+ *     - Después se lanza `VistaLogin` para iniciar una nueva sesión.
+ *
+ * ------------------------------------------------------------
+ *
+ * 3️⃣ **reiniciarSimulacion(Context context, boolean modoDesarrollador)**
+ * ------------------------------------------------------------
+ *   ➤ Objetivo:
+ *     Reinicia la simulación al día 1 pero **sin cerrar sesión**.
+ *     Mantiene el nombre del usuario y el estado del modo desarrollador.
+ *     Se usa en el modo de prueba (cuando se activa el escudo 5 veces).
+ *
+ *   ➤ Qué hace:
+ *     - Recupera el nombre del usuario actual.
+ *     - Restablece:
+ *          · `diaActual = 1`  (reinicia el progreso)
+ *          · `indiceMensajeDia = 0` (primer mensaje del día)
+ *          · `fechaInicio = System.currentTimeMillis()` (nuevo inicio)
+ *     - Vuelve a guardar `modoDesarrollador` según el valor recibido.
+ *
+ *   ➤ Por qué se mantiene `modoDesarrollador`:
+ *     Si el usuario está probando el juego (modo dev),
+ *     puede reiniciar la simulación sin perder el acceso a los botones ocultos.
+ *
+ *   ➤ Interacción:
+ *     - Llamado desde `Controlador.reiniciarSimulacionComun()`.
+ *     - Este método se ejecuta cuando el usuario pulsa “REINICIAR DÍAS”.
+ *     - Luego `VistaPrincipal` o `VistaGuia` se actualizan al día 1.
+ *
+ * ------------------------------------------------------------
+ * 🗂️ Claves utilizadas en SharedPreferences
+ * ------------------------------------------------------------
+ *
+ *   • `nombreUsuario` → String
+ *       → Guarda el nombre actual del jugador.
+ *
+ *   • `diaActual` → int
+ *       → Día de simulación actual (1–14).
+ *
+ *   • `indiceMensajeDia` → int
+ *       → Indica qué mensaje del día se está mostrando.
+ *
+ *   • `fechaInicio` → long
+ *       → Fecha de inicio en milisegundos (System.currentTimeMillis()).
+ *         Se usa para calcular la “fecha simulada” mostrada en la cabecera.
+ *
+ *   • `modoDesarrollador` → boolean
+ *       → Indica si el modo desarrollador está activo o no.
+ *
+ * ------------------------------------------------------------
  * 💡 En resumen:
- *  Preferencias.java = “memoria persistente” de la app.
- *  Controlador y las vistas la usan para recordar:
- *   - quién es el usuario
- *   - en qué día está la simulación
- *   - si está en modo desarrollador
- *   - si es el primer arranque o no
+ * ------------------------------------------------------------
  *
- * 🔁 Relación con otras clases:
- *  ├─ LoginActivity → guardarNombreUsuario(), reiniciarSimulacion()
- *  ├─ Controlador → obtenerNombreUsuario(), reiniciarSimulacion()
- *  ├─ VistaPrincipal → usa las preferencias para obtener el día actual
- *  └─ Cerrar sesión → usa cerrarSesion() + reiniciarSimulacion()
+ * `Preferencias.java` centraliza toda la **gestión de persistencia**.
  *
- * 📘 Concepto clave:
- *  SharedPreferences = un “archivo XML” interno del sistema Android
- *  donde se guardan pares clave–valor de tipo texto, número o booleano.
+ * ✔️ Evita duplicar código en otras clases.
+ * ✔️ Mantiene la sesión activa aunque se cierre la app.
+ * ✔️ Permite reiniciar o limpiar la simulación fácilmente.
+ * ✔️ Integra con `Controlador` y `ManejadorVistas` para actualizar el estado global.
+ *
+ * ============================================================
  */
-

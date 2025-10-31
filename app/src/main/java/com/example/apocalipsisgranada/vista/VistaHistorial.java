@@ -109,3 +109,54 @@ public class VistaHistorial extends AppCompatActivity {
 }
 
 
+/**
+ * ============================================================
+ * 🕓 Clase: VistaHistorial.java
+ * ============================================================
+ *
+ * Muestra el **historial completo de alertas y guías** que el usuario ha recibido
+ * a lo largo de la simulación en “Apocalipsis Granada”.
+ *
+ * Permite revisar todas las notificaciones pasadas de manera ordenada,
+ * mostrando cada mensaje con su formato visual correspondiente.
+ *
+ * ------------------------------------------------------------
+ * ⚙️ Funciones principales
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ Carga el layout `activity_historial.xml`.
+ * 2️⃣ Configura los elementos visuales comunes (cabecera, menú inferior, modo dev).
+ * 3️⃣ Utiliza un `RecyclerView` con el `AdaptadorMensajes` para mostrar los mensajes.
+ * 4️⃣ Llama al `Controlador` para cargar todos los pares de mensajes anteriores
+ *     (alertas + guías) desde los JSON del modelo.
+ * 5️⃣ Actualiza la lista cuando el usuario avanza o reinicia el día.
+ *
+ * ------------------------------------------------------------
+ * 🗂️ Elementos visuales destacados
+ * ------------------------------------------------------------
+ *
+ * - `@id/recyclerHistorial` → lista cronológica descendente de mensajes antiguos.
+ * - `@layout/cabecera` → reutilizada en la parte superior.
+ * - `@id/textoModo` → muestra el texto “🧪 Modo desarrollador — Día X” si procede.
+ *
+ * ------------------------------------------------------------
+ * 🔁 Flujo de funcionamiento
+ * ------------------------------------------------------------
+ *
+ * 1️⃣ Al abrir la pantalla, se leen el `diaActual` y los mensajes pasados.
+ * 2️⃣ Se construye una lista unificada de todos los mensajes anteriores.
+ * 3️⃣ Se muestran en el RecyclerView ordenados por día.
+ * 4️⃣ El menú inferior permite volver a la vista principal o navegar a otras secciones.
+ *
+ * ------------------------------------------------------------
+ * 💡 En resumen:
+ * ------------------------------------------------------------
+ *
+ * `VistaHistorial.java` permite al usuario **consultar el progreso completo**
+ * de la simulación.
+ *
+ * Ofrece una representación visual ordenada y coherente con el resto del sistema,
+ * utilizando las mismas reglas de estilo y arquitectura MVC.
+ *
+ * ============================================================
+ */
